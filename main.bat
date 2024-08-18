@@ -2,7 +2,6 @@
 
 echo.
 echo Unknown project titled Sistem Bel Sekolah Berbasis Python dan Django
-echo Internal Evaluation use only. DO NOT DISTRIBUTE
 echo (c) 2024 Degenerate Aqua Simp. All rights reserved
 echo.
 

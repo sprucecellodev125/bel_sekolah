@@ -2,7 +2,6 @@
 
 Write-Output ""
 Write-Output "Unknown project titled Sistem Bel Sekolah Berbasis Python dan Django"
-Write-Output "Internal Evaluation use only. DO NOT DISTRIBUTE"
 Write-Output "(c) 2024 Degenerate Aqua Simp. All rights reserved"
 Write-Output ""
 

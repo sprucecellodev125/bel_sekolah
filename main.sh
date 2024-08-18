@@ -2,7 +2,6 @@
 
 echo ""
 echo "Unknown project titled Sistem Bel Sekolah Berbasis Python dan Django"
-echo "Internal Evaluation use only. DO NOT DISTRIBUTE"
 echo "(c) 2024 Degenerate Aqua Simp. All rights reserved"
 echo ""
 
@@ -16,7 +15,7 @@ help() {
     echo "-h  : This help page"
     echo "-r  : Run server"
     echo "-m  : Edit models"
-    echo "-s  : Edit settings"
+    echo "-st  : Edit settings"
     echo "-mg : Migrate models"
     echo "-i  : Initialize system"
 }
@@ -73,7 +72,7 @@ editdb() {
     if [[ -z "${EDITOR}" ]]; then
 	echo "No EDITOR detected on this system. Please install nano or vim"
     else
-    	$EDITOR bel_sekolah/bell/models.py
+    	$EDITOR src/bell/models.py
     fi
 }
 
@@ -87,7 +86,7 @@ settings() {
     if [[ -z "${EDITOR}" ]]; then
 	echo "No EDITOR detected on this system. Please install nano or vim"
     else
-	$EDITOR bel_sekolah/bel_sekolah/settings.py
+	$EDITOR src/bel_sekolah/settings.py
     fi
 }
 
@@ -98,12 +97,14 @@ migrate() {
 }
 
 init() {
-    cd bel_sekolah
     python -m venv .venv
     source .venv/bin/activate
     pip install -r requirements.txt
+    cd src
+    mkdir assets
     python manage.py makemigrations
     python manage.py migrate
+    python manage.py compilemessages
 }
 
 case $1 in
@@ -116,8 +117,11 @@ case $1 in
     -m)
 	editdb
 	;;
-    -s)
+    -st)
 	settings
+	;;
+    -i)
+	init
 	;;
     *)
         echo "Invalid option. Use -h for help."
