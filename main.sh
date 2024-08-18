@@ -14,8 +14,9 @@ help() {
     echo "Command arguments:"
     echo "-h  : This help page"
     echo "-r  : Run server"
+    echo "-s  : Stop server"
     echo "-m  : Edit models"
-    echo "-st  : Edit settings"
+    echo "-st : Edit settings"
     echo "-mg : Migrate models"
     echo "-i  : Initialize system"
 }
@@ -47,6 +48,16 @@ start() {
         pm2 start scripts/start-bell.sh
     else
         echo "The previous command failed."
+        exit 1
+    fi
+}
+
+stop () {
+    if command -v pm2 &> /dev/null; then
+        pm2 stop start-bell
+        pm2 start start-web
+    else
+        echo "There's no pm2 installed. Did you mean: -r"
         exit 1
     fi
 }
@@ -113,6 +124,9 @@ case $1 in
         ;;
     -r)
         start
+        ;;
+    -s)
+        stop
         ;;
     -m)
 	editdb
