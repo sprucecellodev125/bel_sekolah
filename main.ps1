@@ -14,8 +14,9 @@ function Show-Help {
     Write-Output "Command arguments:"
     Write-Output "-h  : This help page"
     Write-Output "-r  : Run server"
+    Write-Output "-s  : Stop server"
     Write-Output "-m  : Edit models"
-    Write-Output "-s  : Edit settings"
+    Write-Output "-st : Edit settings"
     Write-Output "-mg : Migrate models"
     Write-Output "-i  : Initialize system"
 }
@@ -43,6 +44,15 @@ function Start-Server {
     } else {
         Write-Output "The previous command failed."
         exit 1
+    }
+}
+
+function Stop-Server {
+    if (Get-Command pm2 -ErrorAction SilentlyContinue) {
+            pm2 stop start-web
+            pm2 stop start-bell
+    } else {
+        Write-Output "There's no pm2 installed. Did you mean: -r"
     }
 }
 
@@ -81,8 +91,9 @@ function Initialize-System {
 switch ($args[0]) {
     '-h' { Show-Help }
     '-r' { Start-Server }
+    '-s' { Stop-Server }
     '-m' { Edit-DB }
-    '-s' { Edit-Settings }
+    '-st' { Edit-Settings }
     '-mg' { MigrateDB }
     '-i' { Initialize-System }
     default {

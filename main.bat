@@ -13,6 +13,7 @@ if "%~1"=="" (
 :start
 if "%~1"=="-h" goto help
 if "%~1"=="-r" goto run_server
+if "%~1"=="-s" goto stop_server
 if "%~1"=="-m" goto editdb
 if "%~1"=="-s" goto settings
 if "%~1"=="-mg" goto migrate
@@ -25,8 +26,9 @@ exit /b 1
 echo Command arguments:
 echo -h  : This help page
 echo -r  : Run server
+echo -s  : Stop server
 echo -m  : Edit models
-echo -s  : Edit settings
+echo -st : Edit settings
 echo -mg : Migrate models
 echo -i  : Initialize system
 goto :eof
@@ -48,6 +50,16 @@ if errorlevel 1 (
 ) else (
     pm2 start scripts/start-web.bat
     pm2 start scripts/start-bell.bat
+)
+goto :eof
+
+:stop_server
+where pm2 >nul 2>&1
+if errorlevel 0 (
+    pm2 stop start-bell
+    pm2 start start-web
+) else (
+    echo There's no pm2 installed. Did you mean: -r
 )
 goto :eof
 
