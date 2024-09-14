@@ -6,9 +6,9 @@ This system is in development phase. There's no bug so far, but expect any issue
 
 ### Requirements:
 Windows:
-1. Windows 10/11 (possibly Windows 8)
+1. Windows 8.1 or higher
 2. Python 3.10 or higher
-3. Node.js 20 or higher
+3. Node.js v18.x.x or higher
 
 Linux:
 1. Any recent Linux distribution with build-essential, gettext, and libsdl2-dev installed
