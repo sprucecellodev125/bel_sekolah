@@ -6,7 +6,7 @@ This system is in development phase. There's no bug so far, but expect any issue
 
 ### Requirements:
 Windows:
-1. Windows 10/11 (possibly Windows 8 supported)
+1. Windows 10/11 (possibly Windows 8)
 2. Python 3.10 or higher
 3. Node.js 20 or higher
 
