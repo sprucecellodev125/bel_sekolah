@@ -108,14 +108,19 @@ migrate() {
 }
 
 init() {
+    echo "Creating Virtual Env"
     python -m venv .venv
     source .venv/bin/activate
+    echo "Installing dependencies"
     pip install -r requirements.txt
+    echo "Moving on to source dir"
     cd src
     mkdir assets
+    echo "Migrating DB, compiling locales"
     python manage.py makemigrations
     python manage.py migrate
     python manage.py compilemessages
+    echo "Done"
 }
 
 case $1 in
@@ -130,6 +135,9 @@ case $1 in
         ;;
     -m)
 	editdb
+	;;
+    -mg)
+	migrate
 	;;
     -st)
 	settings
