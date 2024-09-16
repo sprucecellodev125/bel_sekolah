@@ -108,19 +108,38 @@ migrate() {
 }
 
 init() {
-    echo "Creating Virtual Env"
     python -m venv .venv
+    if [ $? -ne 0 ]; then
+        echo "Failed to create virtual environment"
+        exit 1
+    fi
     source .venv/bin/activate
-    echo "Installing dependencies"
+    if [ $? -ne 0 ]; then
+        echo "Failed to activate virtual environment"
+        exit 1
+    fi
     pip install -r requirements.txt
-    echo "Moving on to source dir"
+    if [ $? -ne 0 ]; then
+        echo "Failed to install dependencies"
+        exit 1
+    fi
     cd src
     mkdir assets
-    echo "Migrating DB, compiling locales"
     python manage.py makemigrations
+    if [ $? -ne 0 ]; then
+        echo "Failed to make migrations"
+        exit 1
+    fi
     python manage.py migrate
+    if [ $? -ne 0 ]; then
+        echo "Failed to create migrate models"
+        exit 1
+    fi
     python manage.py compilemessages
-    echo "Done"
+    if [ $? -ne 0 ]; then
+        echo "Failed to create virtual environment"
+        exit 1
+    fi
 }
 
 case $1 in
