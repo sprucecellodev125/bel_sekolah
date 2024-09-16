@@ -87,8 +87,51 @@ python manage.py migrate
 goto :eof
 
 :init
+@echo off
+
+python -m venv .venv
+IF %ERRORLEVEL% NEQ 0 (
+    echo Failed to create virtual environment
+    exit /b 1
+)
+
+call .\.venv\Scripts\activate
+IF %ERRORLEVEL% NEQ 0 (
+    echo Failed to activate virtual environment
+    exit /b 1
+)
+
+pip install -r requirements.txt
+IF %ERRORLEVEL% NEQ 0 (
+    echo Failed to install dependencies
+    exit /b 1
+)
+
 cd src
-pip install -r .\requirements.txt
+mkdir assets
+IF %ERRORLEVEL% NEQ 0 (
+    echo Failed to create assets directory
+    exit /b 1
+)
+
 python manage.py makemigrations
+IF %ERRORLEVEL% NEQ 0 (
+    echo Failed to make migrations
+    exit /b 1
+)
+
 python manage.py migrate
+IF %ERRORLEVEL% NEQ 0 (
+    echo Failed to migrate
+    exit /b 1
+)
+
+REM Step 7: Compile messages
+python manage.py compilemessages
+IF %ERRORLEVEL% NEQ 0 (
+    echo Failed to compile locale
+    exit /b 1
+)
+
+echo All commands ran successfully!
 goto :eof

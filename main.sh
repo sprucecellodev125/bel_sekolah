@@ -113,16 +113,19 @@ init() {
         echo "Failed to create virtual environment"
         exit 1
     fi
+
     source .venv/bin/activate
     if [ $? -ne 0 ]; then
         echo "Failed to activate virtual environment"
         exit 1
     fi
+
     pip install -r requirements.txt
     if [ $? -ne 0 ]; then
         echo "Failed to install dependencies"
         exit 1
     fi
+
     cd src
     mkdir assets
     python manage.py makemigrations
@@ -130,16 +133,20 @@ init() {
         echo "Failed to make migrations"
         exit 1
     fi
+
     python manage.py migrate
     if [ $? -ne 0 ]; then
-        echo "Failed to create migrate models"
+        echo "Failed to create migrate"
         exit 1
     fi
+
     python manage.py compilemessages
     if [ $? -ne 0 ]; then
-        echo "Failed to create virtual environment"
+        echo "Failed to compile locale"
         exit 1
     fi
+
+    echo "All commands ran successfully!"
 }
 
 case $1 in

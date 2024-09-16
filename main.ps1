@@ -80,12 +80,55 @@ function MigrateDB {
 }
 
 function Initialize-System {
-    Set-Location bel_sekolah
-    python -m venv .\.venv
-    .\.venv\Scripts\activate
-    pip install -r .\requirements.txt
+    python -m venv .venv
+    if (!$?) {
+        Write-Host "Failed to create virtual environment"
+        exit 1
+    }
+
+    . .\.venv\Scripts\Activate
+    if (!$?) {
+        Write-Host "Failed to activate virtual environment"
+        exit 1
+    }
+
+    pip install -r requirements.txt
+    if (!$?) {
+        Write-Host "Failed to install dependencies"
+        exit 1
+    }
+
+    Set-Location -Path "src"
+    if (!$?) {
+        Write-Host "Failed to navigate to src"
+        exit 1
+    }
+
+    New-Item -ItemType Directory -Force -Name "assets"
+    if (!$?) {
+        Write-Host "Failed to create assets directory"
+        exit 1
+    }
+
     python manage.py makemigrations
+    if (!$?) {
+        Write-Host "Failed to make migrations"
+        exit 1
+    }
+
     python manage.py migrate
+    if (!$?) {
+        Write-Host "Failed to migrate"
+        exit 1
+    }
+
+    python manage.py compilemessages
+    if (!$?) {
+        Write-Host "Failed to compile locale messages"
+        exit 1
+    }
+
+    Write-Host "All commands ran successfully!"
 }
 
 switch ($args[0]) {
