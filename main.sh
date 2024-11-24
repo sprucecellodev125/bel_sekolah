@@ -112,33 +112,37 @@ migrate() {
 }
 
 init() {
-    which python3 2> /dev/null
-    if [ $? -ne 0 ]; then
-	echo "Python is not found. Installing ...."
-	if cat /etc/os-release | egrep "Ubuntu|Debian" 2> /dev/null
-	    if which sudo 2> /dev/null
-		sudo apt install build-essential gettext libsdl2-dev python3 python3-pip python3-venv nodejs npm
-	    else
-		apt install build-essential gettext libsd2-dev python3 python3-pip python3-venv nodejs npm
-	    fi
-	elif cat /etc/os-release | grep "Fedora" 2> /dev/null
-	    if which sudo 2> /dev/null
-		sudo dnf groupinstall --setopt fastestmirror=1 "Development Tools" && sudo dnf install SDL2
-	    else
-		dnf groupinstall --setopt fastestmirror=1 "Development Tools" && sudo dnf install SDL2
-	    fi
-	elif cat /etc/os-release | grep "Arch Linux" 2> /dev/null
-	   if which sudo 2> /dev/null
-		sudo pacman -S base-devel python3
-	   else
-		pacman -S base-devel python3
-	   fi
-	else
-	   echo "Unable to determine your Linux distribution. Please open an issue."
-	   exit 1
-	fi
+    # Check if Python3 is installed
+    if ! command -v python3 > /dev/null 2>&1; then
+        echo "Python3 is not found. Installing ...."
+        if grep -qE "Ubuntu|Debian" /etc/os-release 2>/dev/null; then
+            if command -v sudo > /dev/null 2>&1; then
+                sudo apt update && sudo apt install -y build-essential gettext libsdl2-dev python3 python3-pip python3-venv nodejs npm
+            else
+                apt update && apt install -y build-essential gettext libsdl2-dev python3 python3-pip python3-venv nodejs npm
+            fi
+        elif grep -q "Fedora" /etc/os-release 2>/dev/null; then
+            if command -v sudo > /dev/null 2>&1; then
+                sudo dnf groupinstall --setopt fastestmirror=1 -y "Development Tools"
+                sudo dnf install -y SDL2
+            else
+                dnf groupinstall --setopt fastestmirror=1 -y "Development Tools"
+                dnf install -y SDL2
+            fi
+        elif grep -q "Arch Linux" /etc/os-release 2>/dev/null; then
+            if command -v sudo > /dev/null 2>&1; then
+                sudo pacman -S --needed base-devel python3
+            else
+                pacman -S --needed base-devel python3
+            fi
+        else
+            echo "Unable to determine your Linux distribution. Please open an issue."
+            exit 1
+        fi
     fi
-    python -m venv .venv
+
+    # Create and activate virtual environment
+    python3 -m venv .venv
     if [ $? -ne 0 ]; then
         echo "Failed to create virtual environment"
         exit 1
@@ -150,14 +154,21 @@ init() {
         exit 1
     fi
 
+    # Install dependencies
+    if [ ! -f requirements.txt ]; then
+        echo "requirements.txt is missing"
+        exit 1
+    fi
+
     pip install -r requirements.txt
     if [ $? -ne 0 ]; then
         echo "Failed to install dependencies"
         exit 1
     fi
 
+    # Django setup
     cd src
-    mkdir assets
+    mkdir -p assets
     python manage.py makemigrations
     if [ $? -ne 0 ]; then
         echo "Failed to make migrations"
@@ -166,7 +177,7 @@ init() {
 
     python manage.py migrate
     if [ $? -ne 0 ]; then
-        echo "Failed to create migrate"
+        echo "Failed to apply database migrations"
         exit 1
     fi
 
