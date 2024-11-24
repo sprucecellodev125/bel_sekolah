@@ -117,23 +117,23 @@ init() {
         echo "Python3 is not found. Installing ...."
         if grep -qE "Ubuntu|Debian" /etc/os-release 2>/dev/null; then
             if command -v sudo > /dev/null 2>&1; then
-                sudo apt update && sudo apt install -y build-essential gettext libsdl2-dev python3 python3-pip python3-venv nodejs npm
+                sudo apt update && sudo apt install -y build-essential gettext libsdl2-dev python3 python3-pip python3-venv nodejs npm gettext
             else
-                apt update && apt install -y build-essential gettext libsdl2-dev python3 python3-pip python3-venv nodejs npm
+                apt update && apt install -y build-essential gettext libsdl2-dev python3 python3-pip python3-venv nodejs npm gettext
             fi
         elif grep -q "Fedora" /etc/os-release 2>/dev/null; then
             if command -v sudo > /dev/null 2>&1; then
                 sudo dnf groupinstall --setopt fastestmirror=1 -y "Development Tools"
-                sudo dnf install -y SDL2
+                sudo dnf install -y SDL2 gettext
             else
                 dnf groupinstall --setopt fastestmirror=1 -y "Development Tools"
-                dnf install -y SDL2
+                dnf install -y SDL2 gettext
             fi
         elif grep -q "Arch Linux" /etc/os-release 2>/dev/null; then
             if command -v sudo > /dev/null 2>&1; then
-                sudo pacman -S --needed base-devel python3
+                sudo pacman -S --needed base-devel python3 gettext
             else
-                pacman -S --needed base-devel python3
+                pacman -S --needed base-devel python3 gettext
             fi
         else
             echo "Unable to determine your Linux distribution. Please open an issue."
