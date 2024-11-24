@@ -32,10 +32,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Download and install gettext
       run: |
-        curl -L -o gettext.zip https://github.com/mlocati/gettext-iconv-windows/releases/download/v0.22.3/gettext-0.22.3-iconv-1.17-static-win64.zip
-        unzip gettext.zip -d gettext
-        echo ::add-path::%cd%\\gettext-tools >> $env:GITHUB_ENV
         gettext --version
+        msgfmt --version
     - name: Test init script
       run: |
         .\main.bat -i
