@@ -113,8 +113,8 @@ migrate() {
 
 init() {
     # Check if Python3 is installed
-    if ! command -v python3 > /dev/null 2>&1; then
-        echo "Python3 is not found. Installing ...."
+    if ! command -v python3 > /dev/null 2>&1 || ! command -v msgfmt > /dev/null 2>&1; then
+        echo "Either Python3 or msgfmt is missing. Installing dependencies..."
         if grep -qE "Ubuntu|Debian" /etc/os-release 2>/dev/null; then
             if command -v sudo > /dev/null 2>&1; then
                 sudo apt update && sudo apt install -y build-essential gettext libsdl2-dev python3 python3-pip python3-venv nodejs npm gettext
