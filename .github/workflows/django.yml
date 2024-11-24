@@ -28,5 +28,5 @@ jobs:
     - name: Run Tests
       run: |
         cd src/
-        mkdir -p asssets
+        mkdir -p assets
         python manage.py test

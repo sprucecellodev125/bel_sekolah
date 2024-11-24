@@ -30,6 +30,11 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Install gettext
+       run: |
+        choco feature enable -n=allowGlobalConfirmation
+        choco install gettext
+        gettext --version
     - name: Test init script
       run: |
         .\main.bat -i
