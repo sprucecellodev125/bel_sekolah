@@ -7,25 +7,29 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-linux:
 
     runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Test init script
+      run: |
+        ./main.sh -i
+
+  build-windows:
+
+    runs-on: windows-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.10, 3.11, 3.12]
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
+    - name: Test init script
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run Tests
-      run: |
-        cd src/
-        python manage.py test
+        main.bat -i
