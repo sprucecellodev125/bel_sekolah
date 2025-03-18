@@ -26,34 +26,29 @@ start() {
         if ! command -v node &> /dev/null; then
             if command -v wget &> /dev/null; then
                 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-                export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-                [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-                nvm install node
-                npm i -g pm2
             elif command -v curl &> /dev/null; then
                 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-                export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-                [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-                nvm install node
-                npm i -g pm2
             else
                 echo "Cannot continue. Please install curl or wget"
                 exit 1
             fi
-        else
-            npm i -g pm2
+
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+            nvm install node
         fi
+
+        npm i -g pm2
     fi
 
-    if [ $? -eq 0 ]; then
-        pm2 start scripts/start-web.sh
-        pm2 start scripts/start-bell.sh
-    else
-        echo "The previous command failed."
-        exit 1
-    fi
+    # Ensure pm2 is available
+    export PATH="$HOME/.nvm/versions/node/$(nvm version)/bin:$PATH"
+
+    # Start services and check for failures
+    pm2 start "scripts/start-web.sh" || { echo "Failed to start web service."; exit 1; }
+    pm2 start "scripts/start-bell.sh" || { echo "Failed to start bell service."; exit 1; }
 }
 
 stop () {
@@ -107,8 +102,8 @@ settings() {
 
 migrate() {
     source $PWD/.venv/bin/activate
-    python manage.py makemigrations
-    python manage.py migrate
+    python src/manage.py makemigrations
+    python src/manage.py migrate
 }
 
 init() {
@@ -136,7 +131,7 @@ init() {
                 pacman -S --needed base-devel python3 gettext
             fi
         else
-            echo "Unable to determine your Linux distribution. Please open an issue."
+            echo "Unable to determine your Linux distribution. Please open a issue."
             exit 1
         fi
     fi
