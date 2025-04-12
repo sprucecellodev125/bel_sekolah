@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedules</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .top-bar {
+            background-color: #f1f1f1;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .day-buttons .btn {
+            margin-right: 5px;
+        }
+        .table th {
+            font-weight: bold;
+        }
+        .table th:nth-child(1) {
+            width: 20%;
+        }
+        .table th:nth-child(2) {
+            width: 60%;
+        }
+        .table th:nth-child(3) {
+            width: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <span class="ms-3">Schedules</span>
+        <span class="me-3" id="time"></span>
+    </div>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between mb-3">
+            <button class="btn btn-light">Back</button>
+            <button class="btn btn-info text-white">New</button>
+        </div>
+        <div class="btn-group day-buttons mb-3" role="group">
+            <button class="btn btn-primary">Senin</button>
+            <button class="btn btn-light">Selasa</button>
+            <button class="btn btn-light">Rabu</button>
+            <button class="btn btn-light">Kamis</button>
+            <button class="btn btn-light">Jumat</button>
+            <button class="btn btn-light">Sabtu</button>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Ringtone</th>
+                    <td><button class="btn btn-outline-primary"><i class="bi bi-play-fill"></i></button></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>07:50</strong></td>
+                    <td>0001</td>
+                    <td><button class="btn btn-outline-primary"><i class="bi bi-play-fill"></i></button></td>
+                </tr>
+                <tr>
+                    <td><strong>09:50</strong></td>
+                    <td>0001</td>
+                    <td><button class="btn btn-outline-primary"><i class="bi bi-play-fill"></i></button></td>
+                </tr>
+                <tr>
+                    <td><strong>10:50</strong></td>
+                    <td>0001</td>
+                    <td><button class="btn btn-outline-primary"><i class="bi bi-play-fill"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function updateTime() {
+            document.getElementById("time").textContent = new Date().toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
