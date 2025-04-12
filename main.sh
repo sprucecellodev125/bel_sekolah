@@ -165,6 +165,7 @@ init() {
     cd src
     mkdir -p assets
     python manage.py makemigrations
+    python manage.py makemigrations bell
     if [ $? -ne 0 ]; then
         echo "Failed to make migrations"
         exit 1
