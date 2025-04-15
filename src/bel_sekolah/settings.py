@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 # Language options. Supported languages: en-us, id-id
-LANGUAGE_CODE = 'id-id'
+LANGUAGE_CODE = 'id'
 LANGUAGES = [
         ('en', 'English'),
         ('id', 'Bahasa Indonesia'),

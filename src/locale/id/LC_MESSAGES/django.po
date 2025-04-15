@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-04 15:46+0700\n"
+"POT-Creation-Date: 2025-04-15 14:59+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,46 +17,122 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-#: bell/models.py:61
+
+#: bell/admin.py:5
+#| msgid "Monday"
+msgid "Copy to Monday"
+msgstr "Salin ke hari Senin"
+
+#: bell/admin.py:13
+#, python-format
+msgid "%d schedule(s) copied to Monday."
+msgstr ""
+
+#: bell/admin.py:15
+#| msgid "Tuesday"
+msgid "Copy to Tuesday"
+msgstr "Salin ke hari Selasa"
+
+#: bell/admin.py:23
+#, python-format
+msgid "%d schedule(s) copied to Tuesday."
+msgstr ""
+
+#: bell/admin.py:25
+#| msgid "Wednesday"
+msgid "Copy to Wednesday"
+msgstr "Salin ke hari Rabu"
+
+#: bell/admin.py:33
+#, python-format
+msgid "%d schedule(s) copied to Wednesday."
+msgstr ""
+
+#: bell/admin.py:35
+#| msgid "Thursday"
+msgid "Copy to Thursday"
+msgstr "Salin ke hari Kamis"
+
+#: bell/admin.py:43
+#, python-format
+msgid "%d schedule(s) copied to Thursday."
+msgstr ""
+
+#: bell/admin.py:45
+#| msgid "Friday"
+msgid "Copy to Friday"
+msgstr "Salin ke hari Jumat"
+
+#: bell/admin.py:53
+#, python-format
+msgid "%d schedule(s) copied to Friday."
+msgstr ""
+
+#: bell/admin.py:55
+#| msgid "Saturday"
+msgid "Copy to Saturday"
+msgstr "Salin ke hari Sabtu"
+
+#: bell/admin.py:63
+#, python-format
+msgid "%d schedule(s) copied to Saturday."
+msgstr ""
+
+#: bell/admin.py:65
+#| msgid "Sunday"
+msgid "Copy to Sunday"
+msgstr "Salin ke hari Minggu"
+
+#: bell/admin.py:73
+#, python-format
+msgid "%d schedule(s) copied to Sunday."
+msgstr ""
+
+#: bell/models.py:18
 msgid "Monday"
 msgstr "Senin"
 
-#: bell/models.py:62
+#: bell/models.py:19
 msgid "Tuesday"
 msgstr "Selasa"
 
-#: bell/models.py:63
+#: bell/models.py:20
 msgid "Wednesday"
 msgstr "Rabu"
 
-#: bell/models.py:64
+#: bell/models.py:21
 msgid "Thursday"
 msgstr "Kamis"
 
-#: bell/models.py:65
+#: bell/models.py:22
 msgid "Friday"
 msgstr "Jumat"
 
-#: bell/models.py:66
+#: bell/models.py:23
 msgid "Saturday"
 msgstr "Sabtu"
 
-#: bell/models.py:70
+#: bell/models.py:24
+#| msgid "Sunday"
+msgid "Sunday"
+msgstr "Minggu"
+
+#: bell/models.py:27
 msgid "day"
 msgstr "hari"
 
-#: bell/models.py:71
+#: bell/models.py:28
 msgid "time"
 msgstr "waktu"
 
-#: bell/models.py:72
+#: bell/models.py:29
 msgid "ringtone"
 msgstr "nada"
 
-#: bell/models.py:75
+#: bell/models.py:32
 msgid "Bell Schedule"
 msgstr "Jadwal Bel"
 
-#: bell/models.py:76
+#: bell/models.py:33
 msgid "Bell Schedules"
 msgstr "Jadwal Bel"

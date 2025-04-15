@@ -40,7 +40,11 @@ start() {
             nvm install node
         fi
 
-        npm i -g pm2
+        if ! npm i -g pm2; then
+            echo "Trying with sudo..."
+            sudo npm i -g pm2
+        fi
+
     fi
 
     # Ensure pm2 is available
