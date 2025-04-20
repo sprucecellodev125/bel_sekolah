@@ -192,6 +192,7 @@ init() {
 }
 
 createuser() {
+    source $PWD/.venv/bin/activate
     python manage.py createsuperuser
 }
 

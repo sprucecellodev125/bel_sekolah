@@ -131,6 +131,11 @@ function Initialize-System {
     Write-Host "All commands ran successfully!"
 }
 
+function Create-User {
+    . .\.venv\Scripts\Activate
+    python manage.py createsuperuser
+}
+
 switch ($args[0]) {
     '-h' { Show-Help }
     '-r' { Start-Server }
@@ -139,6 +144,7 @@ switch ($args[0]) {
     '-st' { Edit-Settings }
     '-mg' { MigrateDB }
     '-i' { Initialize-System }
+    '-u' { Create-User }
     default {
         Write-Output "Invalid option. Use -h for help."
         exit 1

@@ -31,6 +31,7 @@ echo -m  : Edit models
 echo -st : Edit settings
 echo -mg : Migrate models
 echo -i  : Initialize system
+echo -u  : Create admin user
 goto :eof
 
 :run_server
@@ -134,4 +135,8 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 echo All commands ran successfully!
+goto :eof
+
+:create_user
+python manage.py createsuperuser
 goto :eof
