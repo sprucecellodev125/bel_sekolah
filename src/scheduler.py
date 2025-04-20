@@ -17,10 +17,27 @@ from bell.models import jadwalBel
 pygame.mixer.init()
 
 def play_bell(ringtone):
-    pygame.mixer.music.load(f'assets/{ringtone}')
-    pygame.mixer.music.play()
-    while pygame.mixer.music.get_busy():
-        time.sleep(1)
+    path = os.path.join('assets', ringtone)
+
+    if os.path.isdir(path):
+        # It's an album (a folder), so play all MP3s inside
+        mp3_files = sorted([
+            os.path.join(path, f) for f in os.listdir(path)
+            if f.lower().endswith('.mp3')
+        ])
+        for file in mp3_files:
+            print(f"Playing {file}...")
+            pygame.mixer.music.load(file)
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                time.sleep(1)
+    else:
+        # It's a single MP3 file
+        print(f"Playing {path}...")
+        pygame.mixer.music.load(path)
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy():
+            time.sleep(1)
 
 def fetch_and_list_schedules():
     schedules = jadwalBel.objects.all()
@@ -35,14 +52,12 @@ def main():
         current_day = now.strftime('%A')
         current_time = now.strftime('%H:%M')
         
-        # Fetch the schedule for the current day and time
         schedules = jadwalBel.objects.filter(day=current_day, time=current_time)
         
         for schedule in schedules:
             print(f"Playing bell for {schedule.get_day_display()} at {schedule.time} with ringtone {schedule.get_ringtone_display()}")
             play_bell(schedule.ringtone)
         
-        # Check for the restart flag file
         if os.path.exists("/tmp/restart_scheduler.flag"):
             print("Restart flag detected. Restarting scheduler...")
             os.remove("/tmp/restart_scheduler.flag")

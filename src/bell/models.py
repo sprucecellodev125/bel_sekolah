@@ -9,9 +9,19 @@ import signal
 ASSET_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'assets')
 
 def ambilNada():
-    if not os.path.exists(ASSET_DIR):
-        return []
-    return [(file, file) for file in os.listdir(ASSET_DIR) if file.endswith('.mp3')]
+    nada = []
+    for root, dirs, files in os.walk(ASSET_DIR):
+        for file in files:
+            if file.endswith('.mp3'):
+                full_path = os.path.join(root, file)
+                relative_path = os.path.relpath(full_path, ASSET_DIR)
+                nada.append((relative_path, relative_path))
+        for dir in dirs:
+            dir_path = os.path.join(root, dir)
+            rel_dir = os.path.relpath(dir_path, ASSET_DIR)
+            nada.append((rel_dir, f"[Album] {rel_dir}"))
+        break
+    return list(set(nada))
 
 class jadwalBel(models.Model):
     HARI = [
@@ -26,7 +36,7 @@ class jadwalBel(models.Model):
 
     day = models.CharField(_('day'), max_length=9, choices=HARI)
     time = models.TimeField(_('time'))
-    ringtone = models.CharField(_('ringtone'), max_length=100, choices=ambilNada)
+    ringtone = models.CharField(_('ringtone'), max_length=200, choices=ambilNada())
 
     class Meta:
         verbose_name = _('Bell Schedule')
