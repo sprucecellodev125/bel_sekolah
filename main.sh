@@ -19,6 +19,7 @@ help() {
     echo "-st : Edit settings"
     echo "-mg : Migrate models"
     echo "-i  : Initialize system"
+    echo "-u  : Create admin user"
 }
 
 start() {
@@ -190,6 +191,10 @@ init() {
     echo "All commands ran successfully!"
 }
 
+createuser() {
+    python manage.py createsuperuser
+}
+
 case $1 in
     -h)
         help
@@ -211,6 +216,9 @@ case $1 in
 	;;
     -i)
 	init
+	;;
+    -u)
+	createuser
 	;;
     *)
         echo "Invalid option. Use -h for help."
